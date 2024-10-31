@@ -63,7 +63,7 @@
         <li>\
         <div class='question-wrapper'>\
         <h4 id='question-{{id}}'>{{question}}</h4>\
-        <a class='control-indicator collapsed' data-toggle='collapse' aria-expanded='false' aria-controls='#explanation-{{id}}' href='#explanation-{{id}}''>\
+        <a class='control-indicator collapsed'  role=\"button\" data-bs-toggle='collapse' aria-expanded='false' aria-controls='explanation-{{id}}' href='#explanation-{{id}}''>\
             <span class='sr-only'>Expand {{question}}</span>\
         </a>\
         </div>\
@@ -133,7 +133,6 @@
     // read the data from JSON endpoints
 
     $.getJSON( "/rest/storage_settings", function( response ) {
-        //alert(JSON.stringify(response));
         $('#pagetitle').html(response.title.replace(/(?:\r\n|\r|\n)/g, '<br />'));
         $('#pagesubtitle').html(response.subtitle.replace(/(?:\r\n|\r|\n)/g, '<br />'));
         $('#pagequestionheader').html(response.question_header.replace(/(?:\r\n|\r|\n)/g, '<br />'));
@@ -258,7 +257,7 @@
 
         categories.sort();
 
-        // alert(JSON.stringify(servicelist));
+        // console.log(JSON.stringify(servicelist));
         //
         // render the services grid
         $("#rdmsg-services").append($.Mustache.render('services-template', {services: servicelist} ));
@@ -307,7 +306,7 @@
 
         // ADDED FEATURE TO SELECT A SERVICE BY URL
         // if there is a service name, get it and...
-        // find the service-panel div and if it matches, set the checkbox. 
+        // find the service-panel div and if it matches, set the checkbox.
         var selected_vendor = findGetParameter("service");
         if (selected_vendor.length > 0) {
             $(".service-panel").each( function () {
@@ -722,12 +721,12 @@ function validateEmail(Email) {
         });
         $(".chart-select-all").on("click", function(){
             show_STSM();
-        });     
-        //if NONE filter is selected hie stsm 
+        });
+        //if NONE filter is selected hie stsm
         $(".chart-select-none").on("click", function(){
             $('#scroll-to-see-more').removeClass('my-show');
             $('#scroll-to-see-more').addClass('my-hidden');
-        });  
+        });
 
         show_STSM();
         add_focus_events();
@@ -740,7 +739,7 @@ function validateEmail(Email) {
         }
     });
 
-    //test to see if scroll bar exists if it does show STSM 
+    //test to see if scroll bar exists if it does show STSM
     //for some reason scroll bar width is 6000+ when first rendered?
     function show_STSM(){
         var elementSO = $(".scrolling-outer").get(0);
@@ -751,10 +750,10 @@ function validateEmail(Email) {
                 //really big table just show
                 if (compChecked == selected){
                     $('#scroll-to-see-more').removeClass('my-hidden');
-                    $('#scroll-to-see-more').addClass('my-show');    
+                    $('#scroll-to-see-more').addClass('my-show');
                 }else if(elementSO.offsetWidth < elementSO.scrollWidth){
                     $('#scroll-to-see-more').removeClass('my-hidden');
-                    $('#scroll-to-see-more').addClass('my-show');   
+                    $('#scroll-to-see-more').addClass('my-show');
                 }else{
                     $('#scroll-to-see-more').removeClass('my-show');
                     $('#scroll-to-see-more').addClass('my-hidden');
@@ -762,18 +761,18 @@ function validateEmail(Email) {
             }else if ((elementSO.offsetWidth < elementSO.scrollWidth) && (elementSO.scrollWidth < 5000)) {
                 //console.log("has overflow "+elementSO.offsetWidth+" < "+elementSO.scrollWidth);
                 $('#scroll-to-see-more').removeClass('my-hidden');
-                $('#scroll-to-see-more').addClass('my-show');                  
+                $('#scroll-to-see-more').addClass('my-show');
 
             } else {
                 $('#scroll-to-see-more').removeClass('my-show');
                 $('#scroll-to-see-more').addClass('my-hidden');
             }
-            //add scrolling outer event to hide STSM on scroll this could be in 
+            //add scrolling outer event to hide STSM on scroll this could be in
             $(".scrolling-outer").scroll(function(){
                 $('#scroll-to-see-more').removeClass('my-show');
                 $('#scroll-to-see-more').addClass('my-hidden');
                 SCROLL_CONF = true;
-            });               
+            });
         }
     }
     /* end of scroll to see more */
@@ -786,7 +785,7 @@ function validateEmail(Email) {
 
     //WA fix for tabing to table header only used if user is tabing through table
     //shows or hides overlay
-    function add_focus_events(){ 
+    function add_focus_events(){
         var my_attr = $(".floating-row-header").find("a").attr('data-hidden');
         if( !my_attr){
             $("#comparisonchart th").find("a").on("focus", function(){
@@ -803,6 +802,6 @@ function validateEmail(Email) {
             });
 
         };
-    }    
-    
+    }
+
 })(jQuery, Drupal, drupalSettings);

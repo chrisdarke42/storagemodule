@@ -15,18 +15,6 @@ class StorageController extends ControllerBase {
    * @return array
    */
   public function content() {
-/*
-    return array(
-      '#type' => 'markup',
-      '#markup' => $this->t('Hello, World!  From the Storage controller.'),
-    );
-*/
-
-// assure that a session has been started, and then set the csrf_token
-
-
-
-
 
     return [
       '#theme' => 'storage',
@@ -68,7 +56,7 @@ class StorageController extends ControllerBase {
             'weight' => $term->weight->value,
             'selected' => false,
             'description' => $term->getDescription(),
-            'published' => $term->status->value
+            'published' => $term->status->value,
         ];
       }
     }
@@ -123,7 +111,7 @@ class StorageController extends ControllerBase {
     private function createservicelist() {
 
         $values = [
-            'type' => 'service'
+            'type' => 'service',
         ];
 
         $nodes = Drupal::entityTypeManager()
@@ -135,8 +123,8 @@ class StorageController extends ControllerBase {
 
         foreach ($nodes as $node) {
             $s = [];
-            $s["id"] = $node->nid->value;
-            $s["title"] = $node->title->value;
+            $s["id"] = $node->id();
+            $s["title"] = $node->getTitle();
             // get the facet matches
             $s["facet_matches"] = [];
             foreach ($node->field_facet_matches as $match) {
@@ -162,9 +150,9 @@ class StorageController extends ControllerBase {
             }
 
             $services[] = $s;
-            
+
             return $services;
-        }       
+        }
     }
 
     public function servicelist() {
@@ -177,7 +165,7 @@ class StorageController extends ControllerBase {
     private function createtestservicelist() {
 
         $values = [
-            'type' => 'service'
+            'type' => 'service',
         ];
 
         $nodes = Drupal::entityTypeManager()
@@ -200,12 +188,12 @@ class StorageController extends ControllerBase {
         ->load("paragraph.service_paragraphs.default");
  //       ->load("paragraph" . '.' . "service_paragraphs" . '.' . "default");
 
-
-        foreach ($nodes as $node) {
+        /** @var \Drupal\node\Entity\Node $node */
+      foreach ($nodes as $node) {
           if ($node->isPublished()) {
             $s = [];
-            $s["id"] = $node->nid->value;
-            $s["title"] = $node->title->value;
+            $s["id"] = $node->id();
+            $s["title"] = $node->getTitle();
             // get the facet matches
             $s["facet_matches"] = [];
             foreach ($node->field_facet_matches as $match) {
@@ -255,14 +243,14 @@ class StorageController extends ControllerBase {
         foreach ($services as $key=>$row){
             $title[$key] = $row["title"];
         }
-        array_multisort($title, SORT_ASC|SORT_NATURAL|SORT_FLAG_CASE, $services);   
+        array_multisort($title, SORT_ASC|SORT_NATURAL|SORT_FLAG_CASE, $services);
 
         return $services;
 
     }
 
     public function testservicelist() {
-        $services = $this->createtestservicelist();      
+        $services = $this->createtestservicelist();
         return new JsonResponse($services);
     }
 
@@ -407,7 +395,7 @@ class StorageController extends ControllerBase {
         CURLOPT_AUTOREFERER    => true,   // set referrer on redirect
         CURLOPT_CONNECTTIMEOUT => 120,    // time-out on connect
         CURLOPT_TIMEOUT        => 120,    // time-out on response
-    ); 
+    );
 
     $ch = curl_init($url);
     curl_setopt_array($ch, $options);
