@@ -18,16 +18,16 @@ In a later use case, we had more than 60 alternatives, so we repurposed the Summ
 
 Implementing this application in Drupal allows the service managers to easily edit the available services and supporting data without additional programming.
 
-We believe other groups will have a similar need for a self-service product to guide end-users to narrow down a choice within a set of moderately complex alternatives.  
+We believe other groups will have a similar need for a self-service product to guide end-users to narrow down a choice within a set of moderately complex alternatives.
 
 ## Planning
 
-When using this module to help end-users choose between a number of complex alternatives, based on a number of criteria and the evaluation of information in several categories, expect that gathering the supporting information and designing useful questions will take a significant amount of planning and time. Changing questions or answers or adding or deleting categories of information after services have been entered requires editing each of the services.  
+When using this module to help end-users choose between a number of complex alternatives, based on a number of criteria and the evaluation of information in several categories, expect that gathering the supporting information and designing useful questions will take a significant amount of planning and time. Changing questions or answers or adding or deleting categories of information after services have been entered requires editing each of the services.
 
 We recommend starting with a simple example like that presented below to familiarize yourself with the data layout and editing workflow before beginning a “real” project.
 
 
-From the Extend administrative page (/admin/modules), install the Storage module and its dependencies. 
+From the Extend administrative page (/admin/modules), install the Storage module and its dependencies.
 
 ## Setup of the Storage Module
 
@@ -35,15 +35,15 @@ From the Extend administrative page (/admin/modules), install the Storage module
 * In the Facets taxonomy create a two-level hierarchy of terms representing criteria/questions and choices. For each of the criteria (top level facets), specify a control type: either “checkbox” (used when any, all or none of the choices may be selected) or “radio” (used when only one of the choices may be selected).
 * Drag the Facet taxonomy terms into a two level hierarchy, representing the relationship between criteria/questions and choices.
 
-Services (the things being chosen) can contain a lot of data, and so require a bit of planning. Once the end-user has narrowed down their choices, they will be presented with a comparison table containing data in several fields. These fields are represented by a  Drupal Paragraph called “Service Paragraphs”. Service Paragraphs should be edited before you start entering Service data at 
-/admin/structure/paragraphs_type/service_paragraphs/fields 
+Services (the things being chosen) can contain a lot of data, and so require a bit of planning. Once the end-user has narrowed down their choices, they will be presented with a comparison table containing data in several fields. These fields are represented by a  Drupal Paragraph called “Service Paragraphs”. Service Paragraphs should be edited before you start entering Service data at
+/admin/structure/paragraphs_type/service_paragraphs/fields
 
 When delivered, the Storage module comes with two fields in Service Paragraphs: “First Category” and “Second Category.” You can rename or replace these, and add as many fields as you wish. We have found that Text (formatted, long) fields work best.
 
 Now you may add Services. From the images above, you can see that a service has a title, summary (show on the cards in the first image. They are “eligible” to be chosen, depending on the choices the end-user has specified, and so need a set of “facet-matches” to indicate whether they are compatible with specific choices.  They also have text data in several categories to be able to populate the comparison table.
 
 Create your Services using the Drupal Service content-type. Add title and summary for each.
-Then fill in the text for the Service Paragraphs you have chosen.  As noted above, the Summary field now functions as a category. 
+Then fill in the text for the Service Paragraphs you have chosen.  As noted above, the Summary field now functions as a category.
 
 Required:  Add an additional Service with the title “Help” and put text in each field describing what to expect in that field. This will be used by the Storage module to display help information for the each row in the comparison table. The comparison table may not appear if the Help Service is not defined.
 
@@ -51,7 +51,7 @@ Required:  Add an additional Service with the title “Help” and put text in e
 
 * You may wish to remove all sidebar blocks from this page, so that the Storage can use the full width of the page.
 * The Storage module is displayed at the URL path /storage.
-* There is a configuration page to edit titles and other data on the Storage page at /admin/config/content/storage.  The code depends on these fields being filled out. 
+* There is a configuration page to edit titles and other data on the Storage page at /admin/config/content/storage.  The code depends on these fields being filled out.
 * Check out our production implementation at https://finder.research.cornell.edu
 * You will need to configure the SMTP module to allow the Storage module to send mail.
 * Installation works only at a root site, not if installed in a subdirectory.

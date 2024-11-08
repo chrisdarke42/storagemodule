@@ -67,7 +67,7 @@
             <span class='sr-only'>Expand {{question}}</span>\
         </a>\
         </div>\
-        <div class='explanation collapse' id='explanation-{{id}}'>{{{description}}}</div>\
+        <div class='explanation collapse' id='explanation-{{id}}'><div style=\"width: 200px;\">{{{description}}}</div></div>\
         <fieldset aria-labelledby='question-{{id}}'>\
         {{#choices}}\
             <div class='checkbox' facetid='{{id}}'>\
@@ -322,17 +322,21 @@
         // END SELECT SERVICE BY URL
 
         // ADD CATEGORIES TO SELECT
-        var seloptions = "";
-        $(categories).each(function(i) {
+        let $category_selection_id = "#cats";
+        let $category_selection = $($category_selection_id);
+        if ($category_selection.length) {
+          var seloptions = "";
+          $(categories).each(function(i) {
             seloptions += '<option value="'+categories[i]+'">'+categories[i]+'</option>';
-        });
-        $('#cats').append(seloptions);
+          });
+          $category_selection.append(seloptions);
 
-        $(document).on("change", "#cats",function () {
+          $(document).on("change", $category_selection_id,function () {
             evaluate_services();
             var service_count = $('.cardcheckbox:checked').length;
             if (service_count < 1) { $('#container34').hide(); }
-        });
+          });
+        }
 
         // END ADD CATEGORIES TO SELECT
 
@@ -366,13 +370,17 @@
         number_visible = 0;
         comparisonlist = "";
 
-        var category = $('#cats').find(":selected").val();
+      let $category_selector = $('#cats');
+      let category = null;
+      if ($category_selector.length) {
+        category = $category_selector.find(":selected").val();
+      }
 
         for (i=0;i<servicelist.length;i++) {
             service = servicelist[i];
             var hidden = "no";
             // hide unselected categories
-            if ((category != "All") && (category != "Help text for any service") && (category != service.summary)) {
+            if ($category_selector.length && ((category != "All") && (category != "Help text for any service") && (category != service.summary))) {
                 $("#service-"+service.id) // card
                     .addClass('mismatch')
                     .find(".cardcheckbox")
